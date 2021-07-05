@@ -1,7 +1,6 @@
 import os
 import json
 import glob
-import time
 
 ### To import all files in enzyme entries of KEGG and put them as a dictionary in a file
 ### {enz1: {"s":[comp1, comp2, ... ], "p":[comp1, comp3, ...]}, enz2: .... }
