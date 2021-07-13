@@ -1,11 +1,12 @@
 import os
 import json
 import networkx as nx
-
+import itertools
+import time
 
 ###
 def load_file_of_kegg_enzyme_substrates_products():
-    with open("/Users/hkim78/work/enzyme-networks/data/list_enzyme_substrate_product.json", "r") as f:
+    with open("../data/list_enzyme_substrate_product.json", "r") as f:
         a = json.load(f)
     return a
 
@@ -18,7 +19,7 @@ def generate_unipartite_enz_net_for_domain(domain):
 
     dir_net = "../data/Network/EnzNet/" + domain #dirtectory for output
 
-    path_enz_domain = "../data/ProcessedJGI/" + domain + "/No Glycan/" + domain + "_ec_clean_list_no_glycan.json"
+    path_enz_domain = "../data/ProcessedJGI/" + domain + "/No-Glycan/" + domain + "_ec_clean_list_no_glycan.json"
 
     dict_taxa_enz_in_jgi = load_list_enzyme_for_domain(path_enz_domain)
 
@@ -42,25 +43,28 @@ def generate_unipartite_enz_net_for_domain(domain):
                 B.add_edge(enz, prod)
                 list_comp.append(prod)
 
-        G = nx.DiGraph()
 
+        G = nx.DiGraph()
         for n in list_comp:
             for e1 in B.predecessors(n):
                 for e2 in B.successors(n):
                     G.add_edge(e1,e2)
 
-
         nx.write_gpickle(G, dir_net + "/enz_net_%s_%s.gpickle"%(domain, taxa))
-        #nx.write_graphml(G, dir_net + "/enz_net_%s_%s.graphml"%(domain, taxa))
+
 
 
 
 ###########################################################################################
 list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
 
-domain = "Biosphere"
+domain = "LUCA"
 
-generate_unipartite_enz_net_for_domain(domain)
+bt = time.time()
+a = generate_unipartite_enz_net_for_domain(domain)
 
+et = time.time()
+
+t = et - bt
 
 
