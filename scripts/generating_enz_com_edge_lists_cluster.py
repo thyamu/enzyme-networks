@@ -154,9 +154,7 @@ array_size = array_gap
 if starting_taxa_index == 11900:
     array_size = 55
 
-print(starting_taxa_index, starting_taxa_index + array_size)
-
-# generate_unipartite_enz_net_for_group_of_taxa(domain, starting_taxa_index, array_size)
+generate_unipartite_enz_net_for_group_of_taxa(domain, starting_taxa_index, array_size)
 
 
 
