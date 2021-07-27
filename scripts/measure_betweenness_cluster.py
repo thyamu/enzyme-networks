@@ -170,7 +170,7 @@ def main(arg):
     array_gap = 100
 
     starting_taxa_index = array_index * array_gap
-    array_size = 1
+    array_size = 100
     if starting_taxa_index == 11900:
         array_size = 55
 
