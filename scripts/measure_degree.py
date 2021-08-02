@@ -88,21 +88,19 @@ def write_results(file_name, result):
 
 
 
-def test():
-    print("this is test")
-    bt = time.time()
-    domain = "Archaea"
-    degree_dist = degree_EC_domain(domain)
-    write_results(domain, degree_dist)
-    et = time.time()
-    t = et - bt
-    print(t)
+# def test():
+#     print("this is test")
+#     bt = time.time()
+#     domain = "Archaea"
+#     degree_dist = degree_EC_domain(domain)
+#     write_results(domain, degree_dist)
+#     et = time.time()
+#     t = et - bt
+#     print(t)
 
 
 def degree_distribution_over_ec_class(list_domain):
     # name_eclass = ["oxidoreductase", "transferase", "hydrolase", "lysase", "isomerase", "ligase"]
-
-
     for domain in list_domain:
         print(domain)
         degree_dist = degree_EC_domain(domain)
@@ -119,7 +117,7 @@ def degree_for_every_enzyme(list_domain):
 if __name__ == "__main__":
     # list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
     list_domain = ["Metagenome"]
-    #degree_distribution_over_ec_class()
+    #degree_distribution_over_ec_class(list_domain)
     degree_for_every_enzyme(list_domain)
 
 
