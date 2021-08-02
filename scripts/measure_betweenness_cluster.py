@@ -147,8 +147,8 @@ def write_results_group_of_taxa(domain, result, index):
 def main(arg):
     # name_eclass = ["oxidoreductase", "transferase", "hydrolase", "lysase", "isomerase", "ligase"]
 
-    #domain = "Metagenome"
-    domain = "Bacteria"
+    #domain = "Metagenome" #SBATCH --array 1-120
+    domain = "Bacteria"  #SBATCH --array 1-118
     print(domain)
     array_index = int(sys.argv[1])
     array_gap = 100

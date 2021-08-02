@@ -10,9 +10,9 @@
 #SBATCH --mail-user=hkim78@asu.edu      # notification email
 #SBATCH --mail-type=END,FAIL            # notification type
 #SBATCH --export=ALL
-#SBATCH --array 1-3
+#SBATCH --array 1-118
 
 number=$((${SLURM_ARRAY_TASK_ID}-1))
 
 # run the application:
-python3 generating_enz_com_edge_lists_cluster.py $number
+python3 measure_betweenness_cluster.py $number
