@@ -17,6 +17,22 @@ def load_ezn_net(path_net):
     G = nx.read_gpickle(path_net)
     return G
 
+def degree_enz_net(G):
+    return dict(G.degree())
+
+def degree_enz_domain(domain):
+    '''
+    ### To compute degree of every enzyme in each network
+    :param domain:
+    :return: list of dictionary of G.degree() for a given domain
+    '''
+    path_nets = "../data/Network/EnzNet/%s/*.gpickle" % domain
+    list_dict_deg = list()
+    for f in glob.glob(path_nets):
+        G = load_ezn_net(f)
+        list_dict_deg.append(dict(G.degree()))
+    return list_dict_deg
+
 
 def degree_EC_net(G):
     list_eclass = ["e1", "e2", "e3", "e4", "e5", "e6"]
@@ -51,7 +67,7 @@ def degree_EC_domain(domain):
 
     return deg_eclass_domain
 
-def write_results(domain, result):
+def write_results(file_name, result):
 
     dir_results = "../results"
     if not os.path.exists(dir_results):
@@ -65,34 +81,44 @@ def write_results(domain, result):
     if not os.path.exists(dir_degree):
         os.mkdir(dir_degree)
 
-    path_file  = os.path.join(dir_degree, "degree_distribution_over_EC_%s.json"%domain)
+    #path_file  = os.path.join(dir_degree, "degree_distribution_over_EC_%s.json"%domain)
+    path_file = os.path.join(dir_degree, file_name)
     with open(path_file, "w") as file:
         json.dump(result, file)
 
 
-def test():
-    print("this is test")
-    bt = time.time()
-    domain = "Archaea"
-    degree_dist = degree_EC_domain(domain)
-    write_results(domain, degree_dist)
-    et = time.time()
-    t = et - bt
-    print(t)
+
+# def test():
+#     print("this is test")
+#     bt = time.time()
+#     domain = "Archaea"
+#     degree_dist = degree_EC_domain(domain)
+#     write_results(domain, degree_dist)
+#     et = time.time()
+#     t = et - bt
+#     print(t)
 
 
-def main():
+def degree_distribution_over_ec_class(list_domain):
     # name_eclass = ["oxidoreductase", "transferase", "hydrolase", "lysase", "isomerase", "ligase"]
-
-    # list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
-    list_domain = ["Archaea", "Eukaryota", "Biosphere", "LUCA"]
     for domain in list_domain:
         print(domain)
         degree_dist = degree_EC_domain(domain)
-        write_results(domain, degree_dist)
+        file_name = "degree_distribution_over_EC_%s.json"%domain
+        write_results(file_name, degree_dist)
+
+def degree_for_every_enzyme(list_domain):
+    for domain in list_domain:
+        print(domain)
+        degree_data = degree_enz_domain(domain)
+        file_name = "degree_list_dict_enz_%s.json"%domain
+        write_results(file_name, degree_data)
 
 if __name__ == "__main__":
-    main()
+    # list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
+    list_domain = ["Metagenome"]
+    #degree_distribution_over_ec_class(list_domain)
+    degree_for_every_enzyme(list_domain)
 
 
 
