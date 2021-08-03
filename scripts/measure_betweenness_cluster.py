@@ -14,7 +14,7 @@ import time
 """
 
 def load_ezn_net(path_net):
-    G = nx.read_gpickle(path_net)
+    G = nx.read_gml(path_net)
     return G
 
 
@@ -24,7 +24,7 @@ def betweenness_enz_domain(domain):
     :param domain:
     :return: list of dictionary of betweenness for a given domain
     """
-    path_nets = "../data/Network/EnzNet/%s/*.gpickle" % domain
+    path_nets = "../data/Network/EnzNet/%s/*.gml" % domain
     list_dict_betweenness = list()
     for f in glob.glob(path_nets):
         G = load_ezn_net(f)
@@ -64,7 +64,7 @@ def assign_list_taxa_index_to_domain_data(dict_data, taxa_index, list_length):
 
 
 # def betweenness_EC_domain(domain):
-#     path_nets = "../data/Network/EnzNet/%s/*.gpickle"%domain
+#     path_nets = "../data/Network/EnzNet/%s/*.gml"%domain
 #
 #     list_eclass = ["e1", "e2", "e3", "e4", "e5", "e6"]
 #
@@ -89,7 +89,7 @@ def betweenness_EC_group_of_taxa(domain, taxa_index, list_length = 100):
 
     list_taxa = assign_list_taxa_index_to_domain_data(dict_taxa_enz_in_jgi, taxa_index, list_length)
 
-    # path_nets = "../data/Network/EnzNet/%s/*.gpickle"%domain
+    # path_nets = "../data/Network/EnzNet/%s/*.gml"%domain
 
     list_eclass = ["e1", "e2", "e3", "e4", "e5", "e6"]
 
@@ -98,7 +98,7 @@ def betweenness_EC_group_of_taxa(domain, taxa_index, list_length = 100):
         bet_eclass_domain[ec] = list()
 
     for taxa in list_taxa:
-        f = "../data/Network/EnzNet/%s/enz_net_%s_%s.gpickle"%(domain, domain, taxa)
+        f = "../data/Network/EnzNet/%s/enz_net_%s_%s.gml"%(domain, domain, taxa)
         G = load_ezn_net(f)
         distribution_betweenness = betweenness_EC_net(G)
         for ec in range(1, len(list_eclass) + 1):
@@ -116,7 +116,7 @@ def betweenness_enz_group_of_taxa(domain, taxa_index, list_length = 100):
 
     list_dict_betweenness = list()
     for taxa in list_taxa:
-        f = "../data/Network/EnzNet/%s/enz_net_%s_%s.gpickle"%(domain, domain, taxa)
+        f = "../data/Network/EnzNet/%s/enz_net_%s_%s.gml"%(domain, domain, taxa)
         G = load_ezn_net(f)
         list_dict_betweenness.append(nx.betweenness_centrality(G))
     return list_dict_betweenness
