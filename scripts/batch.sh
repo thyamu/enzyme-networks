@@ -10,7 +10,10 @@
 #SBATCH --mail-user=hkim78@asu.edu      # notification email
 #SBATCH --mail-type=END,FAIL            # notification type
 #SBATCH --export=ALL
-#SBATCH --array 1-118
+#SBATCH --array 1-3
+
+module purge
+module load python/3.7.1
 
 number=$((${SLURM_ARRAY_TASK_ID}-1))
 
