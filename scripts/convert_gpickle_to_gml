@@ -1,0 +1,44 @@
+import networkx as nx
+import glob
+import os
+import time
+import multiprocessing
+
+
+list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
+
+dir_results = "../data"
+if not os.path.exists(dir_results):
+    os.mkdir(dir_results)
+
+dir_net = os.path.join(dir_results, "Network")
+if not os.path.exists(dir_net):
+    os.mkdir(dir_net)
+
+dir_ezn_net = os.path.join(dir_net, "EnzNet")
+if not os.path.exists(dir_ezn_net):
+    os.mkdir(dir_ezn_net)
+
+for domain in list_domain:
+    dir_domain = os.path.join(dir_ezn_net, domain)
+    if not os.path.exists(dir_domain):
+        os.mkdir(dir_domain)
+
+
+
+list_domain = ["Metagenome"]
+bs = time.time()
+old_dir = "../data/Network-gpickle/EnzNet"
+for domain in list_domain:
+    print(domain)
+    old_input =  os.path.join(old_dir, domain)
+    for old_path in glob.glob("%s/enz_net_%s_*.gpickle"%(old_input, domain))[11000:]:
+        G = nx.read_gpickle(old_path)
+        new_path = old_path.replace("-gpickle", "")
+        new_path = new_path.replace(".gpickle", ".gml")
+        nx.write_graphml(G, new_path)
+es = time.time()
+
+t = es - bs
+        
+
