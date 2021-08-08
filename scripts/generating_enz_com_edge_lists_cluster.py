@@ -142,20 +142,36 @@ def generate_unipartite_enz_net_for_group_of_taxa(domain, taxa_index, list_lengt
 
 ###########################################################################################
 
-# list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
+def main(arg):
+    # list_domain = ["Archaea", "Bacteria", "Eukaryota", "Metagenome", "Biosphere", "LUCA"]
 
-domain = "Metagenome"
+    # domain = "Metagenome"
+    #
+    # array_index = int(sys.argv[1])
+    # array_gap = 100
+    #
+    # starting_taxa_index = array_index * array_gap
+    # array_size = 1
+    # if starting_taxa_index == 11900:
+    #     array_size = 55
 
-array_index = int(sys.argv[1])
-array_gap = 100
+    #domain = "Metagenome" #SBATCH --array 1-120 ( 0 - 119)
+    domain = "Bacteria"  #SBATCH --array 1-118 (0 - 117)
+    print(domain)
+    array_index = int(sys.argv[1])
+    array_gap = 100 # for Agave
 
-starting_taxa_index = array_index * array_gap
-array_size = 1
-if starting_taxa_index == 11900:
-    array_size = 55
+    starting_taxa_index = array_index * array_gap
+    array_size = 1 # for test
+    array_size = array_gap
+    if domain == "Metagenome" and starting_taxa_index == 11900:
+        array_size = 55
+    if domain == "Bacteria" and starting_taxa_index == 11700:
+        array_size = 59
 
-generate_unipartite_enz_net_for_group_of_taxa(domain, starting_taxa_index, array_size)
+    generate_unipartite_enz_net_for_group_of_taxa(domain, starting_taxa_index, array_size)
 
-
+if __name__ == "__main__":
+    main(sys.argv[1])
 
 
