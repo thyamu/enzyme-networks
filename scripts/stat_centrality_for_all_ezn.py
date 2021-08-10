@@ -61,8 +61,7 @@ def load_data(domain, kind="degree"):  # kind = "degree" or "betweenness"
 
     df.columns = [kind]  # Assign the name of the column for degree
     df["enz"] = df.index  # Assign the name of the column for nodes aside from index
-    df["ec_class"] = df["enz"].str.split('.').str[
-        0]  # EC class determined by the first digit will be added as a separate column
+    df["ec_class"] = df["enz"].str.split('.').str[0]  # EC class determined by the first digit will be added as a separate column
     return df
 
 
@@ -109,7 +108,7 @@ if __name__ == "__main__":
     # metagenome ==> 3000s
     # bacteria ==> 1200s
 
-    list_domain = [archaea]
+    list_domain = [luca]
     for domain in list_domain:
 
         bt = time.time()
